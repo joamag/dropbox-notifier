@@ -1,0 +1,7 @@
+*.pyc
+
+session.shelve*
+
+/dist
+/build
+/src/dropbox_notifier.egg-info
