@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import time
+
 import appier
 import appier_extras
 
@@ -44,9 +46,35 @@ class BaseController(appier.Controller):
     async def webhook_data(self):
         print(self.request.get_data())
 
-    @appier.route("/scheduler", "GET")
+    @appier.route("/admin/schedule.json", "GET", json=True)
     async def scheduler(self):
-        import time
+        email = self.field("email", None)
+        if not email:
+            raise appier.OperationalError(message="No email defined")
+        self.schedule(email)
+
+    @appier.route("/admin/email.json", "GET", json=True)
+    @appier.ensure(token="admin", context="admin")
+    def email_test(self, owner=None):
+        owner = owner or appier.get_app()
+        email = self.field("email", None)
+        if not email:
+            raise appier.OperationalError(message="No email defined")
+        appier_extras.admin.Base.send_email_g(
+            owner,
+            "email/test.html.tpl",
+            receivers=[email],
+            subject=self.to_locale("Dropbox Notifier test email"),
+            attachments=[
+                appier.FileTuple.from_data(
+                    b"hello world", name="hello.txt", mime="text/plain"
+                )
+            ],
+        )
+        return dict(email=email)
+
+    def schedule(self, email, owner=None, sleep=30):
+        owner = owner or appier.get_app()
 
         api = self.get_api()
 
@@ -68,29 +96,38 @@ class BaseController(appier.Controller):
                 removed = [id for id in previous_ids if not id in ids]
                 added_entries = [entries_m[id] for id in added]
                 removed_entries = [previous_entries[id] for id in removed]
-                print(f"ADDED -> {added_entries}")
-                print(f"Removed ->  {removed_entries}")
+
+                added_files = []
+
+                for added_entry in added_entries:
+                    contents, result = api.download_file(added_entry["id"])
+                    content_type = appier.FileTuple.guess(result["name"])
+                    file_tuple = appier.FileTuple.from_data(
+                        contents,
+                        name=added_entry["path_lower"],
+                        mime=content_type or "application/octet-stream",
+                    )
+                    added_files.append(file_tuple)
+
+                appier_extras.admin.Base.send_email_g(
+                    owner,
+                    "email/updated.html.tpl",
+                    receivers=[email],
+                    subject=self.to_locale("Folder updated"),
+                    attachments=added_files,
+                    added_entries=added_entries,
+                    removed_entries=removed_entries,
+                )
+
+                import pprint
+
+                pprint.pprint(added_entries)
+                pprint.pprint(removed_entries)
 
             previous_ids = ids
             previous_entries = entries_m
 
-            print(contents)
-            time.sleep(30)
-
-    @appier.route("/admin/email.json", "GET")
-    @appier.ensure(token="admin", context="admin")
-    def email_test(self, owner=None):
-        owner = owner or appier.get_app()
-        email = self.field("email", None)
-        if not email:
-            raise appier.OperationalError(message="No email defined")
-        appier_extras.admin.Base.send_email_g(
-            owner,
-            "email/test.html.tpl",
-            receivers=[email],
-            subject=self.to_locale("Dropbox Notifier test email"),
-        )
-        return dict(email=email)
+            time.sleep(sleep)
 
     def get_api(self) -> dropbox.API:
         return dropbox.API(access_token=appier.conf("DROPBOX_TOKEN"))
