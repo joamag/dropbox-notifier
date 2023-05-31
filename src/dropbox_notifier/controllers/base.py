@@ -78,21 +78,19 @@ class BaseController(appier.Controller):
             time.sleep(30)
 
     @appier.route("/admin/email.json", "GET")
-    @appier.ensure(token = "admin", context = "admin")
-    def email_test(self, owner = None):
+    @appier.ensure(token="admin", context="admin")
+    def email_test(self, owner=None):
         owner = owner or appier.get_app()
         email = self.field("email", None)
-        if not email: raise appier.OperationalError(
-            message = "No email defined"
-        )
+        if not email:
+            raise appier.OperationalError(message="No email defined")
         appier_extras.admin.Base.send_email_g(
             owner,
             "email/test.html.tpl",
-            receivers = [email],
-            subject = self.to_locale("Shopdesk test email")
+            receivers=[email],
+            subject=self.to_locale("Dropbox Notifier test email"),
         )
-        return dict(email = email)
-
+        return dict(email=email)
 
     def get_api(self) -> dropbox.API:
         return dropbox.API(access_token=appier.conf("DROPBOX_TOKEN"))
