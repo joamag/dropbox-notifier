@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import appier
-import dropbox
 import appier_extras
+
+import dropbox
 
 
 class DropboxNotifierBase(appier_extras.admin.Base):

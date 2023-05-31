@@ -82,7 +82,7 @@ class BaseController(appier.Controller):
         previous_ids: list[str] | None = None
 
         while True:
-            self.logger.debug("Running new logger")
+            self.logger.debug("Running new logger cycle")
 
             contents = api.list_folder_file("id:CtYjakof0XIAAAAAAAPyEg", recursive=True)
             entries_m = dict(
@@ -118,11 +118,6 @@ class BaseController(appier.Controller):
                     added_entries=added_entries,
                     removed_entries=removed_entries,
                 )
-
-                import pprint
-
-                pprint.pprint(added_entries)
-                pprint.pprint(removed_entries)
 
             previous_ids = ids
             previous_entries = entries_m
