@@ -1,2 +1,3 @@
-# dropbox-notifier
-Simple notifier for Dropbox accoutns
+# Dropbox Notifier
+
+Simple notifier for Dropbox accounts.
