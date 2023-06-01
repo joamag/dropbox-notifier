@@ -5,7 +5,7 @@
         <p>The following files have been <strong>added</strong>:</p>
         <ul>
             {% for added_entry in added_entries %}
-                <li><strong>{{ added_entry.path_display[prefix_size:] }}</strong></li>
+                <li><strong><a href="{{ folder_url }}{{ added_entry.path_display[prefix_size:] }}?{{ folder_query }}">{{ added_entry.path_display[prefix_size:] }}</a></strong></li>
             {% endfor %}
         </ul>
         <p>The added files have been added as attachments.</p>

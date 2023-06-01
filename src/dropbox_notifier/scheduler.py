@@ -55,6 +55,32 @@ class Scheduler(appier.Scheduler):
         folder_path = folder_meta["path_display"]
         prefix_size = len(folder_path)
 
+        share = api.list_shared_links(folder_path)
+        share_links = share.get("links", [])
+
+        # in case valid share links exist then we should re-use the
+        # best of them to create the appropriate links
+        if share_links:
+            shared = share_links[0]
+
+            # loops trying to find the best possible share link
+            # for the folder, keeping in mind that using extended sharing
+            # controls will allows deep shared folder
+            for share_link in share_links:
+                link_permissions = share_link.get("link_permissions", {})
+                if not link_permissions.get("can_use_extended_sharing_controls", False):
+                    continue
+                shared = share_link
+
+        # creates a shared link to the folder so that it can be used
+        # for the URL creation in no shared link already exists
+        else:
+            shared = api.create_shared_link(folder_path)
+
+        shared_url = appier.legacy.urlparse(shared["url"])
+        shared_base = f"{shared_url.scheme}://{shared_url.netloc}{shared_url.path}"
+        shared_query = shared_url.query
+
         contents = api.list_folder_file(folder_path, recursive=True)
         entries_m = dict((entry["id"], entry) for entry in contents.get("entries", []))
         ids = [entry["id"] for entry in contents["entries"]]
@@ -93,6 +119,8 @@ class Scheduler(appier.Scheduler):
                 added_entries=added_entries,
                 removed_entries=removed_entries,
                 folder_path=folder_path,
+                folder_url=shared_base,
+                folder_query=shared_query,
                 prefix_size=prefix_size,
             )
 

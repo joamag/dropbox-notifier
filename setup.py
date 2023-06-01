@@ -20,12 +20,7 @@ setuptools.setup(
         "dropbox_notifier.models",
     ],
     package_dir={"": os.path.normpath("src")},
-    package_data = {
-        "dropbox_notifier" : [
-            "templates/*.tpl",
-            "templates/email/*.tpl"
-        ]
-    },
+    package_data={"dropbox_notifier": ["templates/*.tpl", "templates/email/*.tpl"]},
     install_requires=["appier", "appier-extras"],
     classifiers=[
         "Development Status :: 3 - Alpha",
