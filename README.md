@@ -10,6 +10,12 @@ Simple notifier for Dropbox accounts.
 * Sends e-mail based notifications
 * Makes use of Black for validation
 
+### Configuration
+
+| Name                | Type  | Default | Description                                                                                      |
+| ------------------- | ----- | ------- | ------------------------------------------------------------------------------------------------ |
+| **NOTIFIER_FOLDER** | `str` | `None`  | The Dropbox path or ID of the folder to be scanned for changes (eg: `"id:CtYjakofsdAAAAAPyEg"`). |
+
 ## License
 
 Dropbox Notifier is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).

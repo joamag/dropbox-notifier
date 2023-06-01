@@ -15,6 +15,15 @@ class DropboxNotifierApp(appier.WebApp):
             **kwargs
         )
 
+    def _version(self) -> str:
+        return "0.1.0"
+
+    def _description(self) -> str:
+        return "Dropbox Notifier"
+
+    def _observations(self) -> str:
+        return "Simple Dropbox Notifier"
+
 
 if __name__ == "__main__":
     app = DropboxNotifierApp()
