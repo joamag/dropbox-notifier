@@ -4,6 +4,8 @@
 import appier
 import appier_extras
 
+from dropbox_notifier import scheduler
+
 
 class DropboxNotifierApp(appier.WebApp):
     def __init__(self, *args, **kwargs):
@@ -14,6 +16,13 @@ class DropboxNotifierApp(appier.WebApp):
             *args,
             **kwargs
         )
+        self.scheduler = scheduler.Scheduler(self)
+
+    def start(self):
+        appier.WebApp.start(self)
+        scheduler = appier.conf("SCHEDULER", True, cast=bool)
+        if scheduler:
+            self.scheduler.start()
 
     def _version(self) -> str:
         return "0.1.0"

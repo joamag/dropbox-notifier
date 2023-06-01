@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Initial code structure
 * Added `CHANGELOG.md` file
+* Scheduler support
 
 ### Changed
 

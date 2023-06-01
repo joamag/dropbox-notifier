@@ -12,9 +12,12 @@ Simple notifier for Dropbox accounts.
 
 ### Configuration
 
-| Name                | Type  | Default | Description                                                                                      |
-| ------------------- | ----- | ------- | ------------------------------------------------------------------------------------------------ |
-| **NOTIFIER_FOLDER** | `str` | `None`  | The Dropbox path or ID of the folder to be scanned for changes (eg: `"id:CtYjakofsdAAAAAPyEg"`). |
+| Name                  | Type   | Default | Description                                                                                      |
+| --------------------- | ------ | ------- | ------------------------------------------------------------------------------------------------ |
+| **SCHEDULER**         | `bool` | `True`  | If the scheduler for modification tracking is active.                                            |
+| **SCHEDULER_TIMEOUT** | `int`  | `30`    | The number of seconds between tick scheduler tick operations.                                    |
+| **NOTIFIER_EMAIL**    | `str`  | `None`  | The email address to where the modification notifications are going to be sent.                  |
+| **NOTIFIER_FOLDER**   | `str`  | `None`  | The Dropbox path or ID of the folder to be scanned for changes (eg: `"id:CtYjakofsdAAAAAPyEg"`). |
 
 ## License
 
