@@ -33,9 +33,11 @@ class Scheduler(appier.Scheduler):
         appier.Scheduler.tick(self)
 
         email: str = typing.cast(str, appier.conf("NOTIFIER_EMAIL", None))
-        receivers: str = typing.cast(str, appier.conf("NOTIFIER_RECEIVERS", []))
-        cc: str = typing.cast(str, appier.conf("NOTIFIER_CC", []))
-        bcc: str = typing.cast(str, appier.conf("NOTIFIER_BCC", []))
+        receivers: str = typing.cast(
+            str, appier.conf("NOTIFIER_RECEIVERS", [], cast=list)
+        )
+        cc: str = typing.cast(str, appier.conf("NOTIFIER_CC", [], cast=list))
+        bcc: str = typing.cast(str, appier.conf("NOTIFIER_BCC", [], cast=list))
         folder_path: str = typing.cast(str, appier.conf("NOTIFIER_FOLDER", None))
 
         self.logger.debug("Start of tick operation ...")
