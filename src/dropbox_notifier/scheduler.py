@@ -39,7 +39,7 @@ class Scheduler(appier.Scheduler):
         folder_path: str = typing.cast(str, appier.conf("NOTIFIER_FOLDER", None))
 
         self.logger.debug("Start of tick operation ...")
-        if email and folder_path:
+        if (email or receivers) and folder_path:
             self.scan_folder(email, folder_path, receivers=receivers, cc=cc, bcc=bcc)
         self.logger.debug("Ended tick operation")
 
