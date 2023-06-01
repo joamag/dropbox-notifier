@@ -33,14 +33,19 @@ class Scheduler(appier.Scheduler):
         appier.Scheduler.tick(self)
 
         email: str = typing.cast(str, appier.conf("NOTIFIER_EMAIL", None))
+        receivers: str = typing.cast(str, appier.conf("NOTIFIER_RECEIVERS", []))
+        cc: str = typing.cast(str, appier.conf("NOTIFIER_CC", []))
+        bcc: str = typing.cast(str, appier.conf("NOTIFIER_BCC", []))
         folder_path: str = typing.cast(str, appier.conf("NOTIFIER_FOLDER", None))
 
         self.logger.debug("Start of tick operation ...")
         if email and folder_path:
-            self.scan_folder(email, folder_path)
+            self.scan_folder(email, folder_path, receivers=receivers, cc=cc, bcc=bcc)
         self.logger.debug("Ended tick operation")
 
-    def scan_folder(self, email: str, folder_path: str, owner=None):
+    def scan_folder(
+        self, email: str, folder_path: str, receivers=[], cc=[], bcc=[], owner=None
+    ):
         self.logger.debug(f"Scanning '{folder_path}' for changes...")
 
         owner = owner or appier.get_app()
@@ -65,7 +70,8 @@ class Scheduler(appier.Scheduler):
 
             for added_entry in added_entries:
                 tag = added_entry.get(".tag", "file")
-                if not tag == "file": continue
+                if not tag == "file":
+                    continue
 
                 contents, result = api.download_file(added_entry["id"])
                 content_type = appier.FileTuple.guess(result["name"])
@@ -79,7 +85,9 @@ class Scheduler(appier.Scheduler):
             appier_extras.admin.Base.send_email_g(
                 owner,
                 "email/updated.html.tpl",
-                receivers=[email],
+                receivers=receivers if receivers else [email],
+                cc=cc,
+                bcc=bcc,
                 subject=owner.to_locale(f"Dropbox folder {folder_path} updated"),
                 attachments=added_files,
                 added_entries=added_entries,
