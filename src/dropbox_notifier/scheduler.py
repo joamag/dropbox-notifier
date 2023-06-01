@@ -48,6 +48,7 @@ class Scheduler(appier.Scheduler):
 
         folder_meta = api.metadata_file(folder_path)
         folder_path = folder_meta["path_display"]
+        prefix_size = len(folder_path)
 
         contents = api.list_folder_file(folder_path, recursive=True)
         entries_m = dict((entry["id"], entry) for entry in contents.get("entries", []))
@@ -70,7 +71,7 @@ class Scheduler(appier.Scheduler):
                 content_type = appier.FileTuple.guess(result["name"])
                 file_tuple = appier.FileTuple.from_data(
                     contents,
-                    name=added_entry["path_display"],
+                    name=added_entry["path_display"][prefix_size:],
                     mime=content_type or "application/octet-stream",
                 )
                 added_files.append(file_tuple)
@@ -84,7 +85,7 @@ class Scheduler(appier.Scheduler):
                 added_entries=added_entries,
                 removed_entries=removed_entries,
                 folder_path=folder_path,
-                prefix_size=len(folder_path),
+                prefix_size=prefix_size,
             )
 
         self.previous_ids = ids
