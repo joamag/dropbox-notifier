@@ -63,6 +63,9 @@ class Scheduler(appier.Scheduler):
             added_files = []
 
             for added_entry in added_entries:
+                tag = added_entry.get(".tag", "file")
+                if not tag == "file": continue
+
                 contents, result = api.download_file(added_entry["id"])
                 content_type = appier.FileTuple.guess(result["name"])
                 file_tuple = appier.FileTuple.from_data(
