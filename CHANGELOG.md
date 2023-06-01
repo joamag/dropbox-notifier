@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Initial code structure
 * Added `CHANGELOG.md` file
 * Scheduler support
+* Support for receivers, CC and BCC in email notification
 
 ### Changed
 
