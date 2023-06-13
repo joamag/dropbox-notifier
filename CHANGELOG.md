@@ -9,8 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Support for shared links
-* Initial support for the `APIConfig` model
+*
 
 ### Changed
 
@@ -19,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.2.0] - 2023-06-13
+
+### Added
+
+* Support for shared links
+* Initial support for the `APIConfig` model
 
 ## [0.1.0] - 2023-06-01
 
