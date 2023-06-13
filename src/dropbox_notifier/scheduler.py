@@ -28,8 +28,8 @@ class Scheduler(appier.Scheduler):
             *args,
             **kwargs,
         )
-        self.previous_entries: dict[str, object] | None = None
-        self.previous_ids: list[str] | None = None
+        self.previous_entries: typing.Union[dict[str, object], None] = None
+        self.previous_ids: typing.Union[list[str], None] = None
 
     def tick(self):
         appier.Scheduler.tick(self)
