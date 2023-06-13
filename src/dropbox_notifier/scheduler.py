@@ -8,8 +8,6 @@ import appier_extras
 
 from dropbox import API
 
-from dropbox_notifier import APIConfig
-
 LOOP_TIMEOUT = 30.0
 """ The time value to be used to sleep the main sequence
 loop between ticks, this value should not be too small
@@ -133,5 +131,7 @@ class Scheduler(appier.Scheduler):
         self.previous_entries = entries_m
 
     def get_api(self) -> API:
+        from dropbox_notifier import APIConfig
+
         api_config = typing.cast(APIConfig, APIConfig.singleton())
         return api_config.get_api()
