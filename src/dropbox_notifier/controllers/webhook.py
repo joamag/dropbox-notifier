@@ -7,13 +7,13 @@ from .root import RootController
 
 
 class WebhookController(RootController):
-    @appier.route("/webhook", "GET")
+    @appier.route("/webhook", "GET", json=True)
     async def webhook_challenge(self):
         challenge = self.field("challenge")
         self.request.set_header("Content-Type", "text/plain")
         self.request.set_header("X-Content-Type-Options", "nosniff")
         return challenge
 
-    @appier.route("/webhook", "POST")
+    @appier.route("/webhook", "POST", json=True)
     async def webhook_data(self):
         print(self.request.get_data())

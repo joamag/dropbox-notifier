@@ -7,11 +7,13 @@ from .root import RootController
 
 
 class BaseController(RootController):
-    @appier.route("/", "GET")
+    @appier.route("/", "GET", json=True)
+    @appier.ensure(token="admin", context="admin")
     async def index(self):
         return self.me()
 
-    @appier.route("/me", "GET")
+    @appier.route("/me", "GET", json=True)
+    @appier.ensure(token="admin", context="admin")
     async def me(self):
         url = self.ensure_api()
         if url:
@@ -20,7 +22,8 @@ class BaseController(RootController):
         account = api.self_user()
         return account
 
-    @appier.route("/files/insert/<str:message>", "GET")
+    @appier.route("/files/insert/<str:message>", "GET", json=True)
+    @appier.ensure(token="admin", context="admin")
     async def file_insert(self, message):
         url = self.ensure_api()
         if url:
@@ -33,7 +36,8 @@ class BaseController(RootController):
         contents = api.session_finish_file(session_id, data=message, path=path)
         return contents
 
-    @appier.route("/folders/list", "GET")
+    @appier.route("/folders/list", "GET", json=True)
+    @appier.ensure(token="admin", context="admin")
     async def folder_list(self):
         url = self.ensure_api()
         if url:
