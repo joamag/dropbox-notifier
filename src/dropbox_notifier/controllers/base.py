@@ -10,7 +10,7 @@ class BaseController(RootController):
     @appier.route("/", "GET", json=True)
     @appier.ensure(token="admin", context="admin")
     async def index(self):
-        return self.me()
+        return await self.me()
 
     @appier.route("/me", "GET", json=True)
     @appier.ensure(token="admin", context="admin")
