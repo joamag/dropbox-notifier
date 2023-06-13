@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.2.5] - 2023-06-13
+
+### Fixed
+
+* Removed async references
+
 ## [0.2.4] - 2023-06-13
 
 ### Fixed
