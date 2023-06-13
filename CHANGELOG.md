@@ -13,11 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* Automatic update of access tokens
+*
 
 ### Fixed
 
 *
+
+## [0.2.2] - 2023-06-13
+
+### Changed
+
+* Automatic update of access tokens
 
 ## [0.2.1] - 2023-06-13
 
