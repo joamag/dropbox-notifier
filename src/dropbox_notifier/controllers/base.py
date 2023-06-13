@@ -9,12 +9,12 @@ from .root import RootController
 class BaseController(RootController):
     @appier.route("/", "GET", json=True)
     @appier.ensure(token="admin", context="admin")
-    async def index(self):
-        return await self.me()
+    def index(self):
+        return self.me()
 
     @appier.route("/me", "GET", json=True)
     @appier.ensure(token="admin", context="admin")
-    async def me(self):
+    def me(self):
         url = self.ensure_api()
         if url:
             return self.redirect(url)
@@ -24,7 +24,7 @@ class BaseController(RootController):
 
     @appier.route("/files/insert/<str:message>", "GET", json=True)
     @appier.ensure(token="admin", context="admin")
-    async def file_insert(self, message):
+    def file_insert(self, message):
         url = self.ensure_api()
         if url:
             return self.redirect(url)
@@ -38,7 +38,7 @@ class BaseController(RootController):
 
     @appier.route("/folders/list", "GET", json=True)
     @appier.ensure(token="admin", context="admin")
-    async def folder_list(self):
+    def folder_list(self):
         url = self.ensure_api()
         if url:
             return self.redirect(url)
