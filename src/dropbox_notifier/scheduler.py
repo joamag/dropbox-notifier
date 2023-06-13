@@ -6,7 +6,9 @@ import typing
 import appier
 import appier_extras
 
-import dropbox
+from dropbox import API
+
+from dropbox_notifier import APIConfig
 
 LOOP_TIMEOUT = 30.0
 """ The time value to be used to sleep the main sequence
@@ -51,6 +53,7 @@ class Scheduler(appier.Scheduler):
         self.logger.debug(f"Scanning '{folder_path}' for changes...")
 
         owner = owner or appier.get_app()
+        owner = typing.cast(appier.App, owner)
         api = self.get_api()
 
         folder_meta = api.metadata_file(folder_path)
@@ -129,5 +132,6 @@ class Scheduler(appier.Scheduler):
         self.previous_ids = ids
         self.previous_entries = entries_m
 
-    def get_api(self) -> dropbox.API:
-        return dropbox.API(access_token=appier.conf("DROPBOX_TOKEN"))
+    def get_api(self) -> API:
+        api_config = typing.cast(APIConfig, APIConfig.singleton())
+        return api_config.get_api()
