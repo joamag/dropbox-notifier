@@ -8,11 +8,11 @@ from .root import RootController
 
 class BaseController(RootController):
     @appier.route("/", "GET")
-    def index(self):
+    async def index(self):
         return self.me()
 
     @appier.route("/me", "GET")
-    def me(self):
+    async def me(self):
         url = self.ensure_api()
         if url:
             return self.redirect(url)
@@ -21,7 +21,7 @@ class BaseController(RootController):
         return account
 
     @appier.route("/files/insert/<str:message>", "GET")
-    def file_insert(self, message):
+    async def file_insert(self, message):
         url = self.ensure_api()
         if url:
             return self.redirect(url)
@@ -34,7 +34,7 @@ class BaseController(RootController):
         return contents
 
     @appier.route("/folders/list", "GET")
-    def folder_list(self):
+    async def folder_list(self):
         url = self.ensure_api()
         if url:
             return self.redirect(url)

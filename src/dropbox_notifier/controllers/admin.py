@@ -10,7 +10,7 @@ from .root import RootController
 class AdminController(RootController):
     @appier.route("/admin/email.json", "GET", json=True)
     @appier.ensure(token="admin", context="admin")
-    def email_test(self, owner=None):
+    async def email_test(self, owner=None):
         owner = owner or appier.get_app()
         email = self.field("email", None)
         if not email:
