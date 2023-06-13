@@ -13,11 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* Forced admin permissions for accessing all routes (except OAuth)
+*
 
 ### Fixed
 
 *
+
+## [0.2.3] - 2023-06-13
+
+### Changed
+
+* Forced admin permissions for accessing all routes (except OAuth)
 
 ## [0.2.2] - 2023-06-13
 
