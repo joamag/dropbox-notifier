@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.2.1] - 2023-06-13
+
+### Changed
+
+* Bumped `dropbox-api` version
+
 ## [0.2.0] - 2023-06-13
 
 ### Added
