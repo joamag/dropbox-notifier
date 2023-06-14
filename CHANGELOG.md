@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* A new file `extra.txt` with extra dependencies
+*
 
 ### Changed
 
@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.2.7] - 2023-06-14
+
+### Added
+
+* A new file `extra.txt` with extra dependencies
 
 ## [0.2.6] - 2023-06-14
 

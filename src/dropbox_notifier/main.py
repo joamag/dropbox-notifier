@@ -25,7 +25,7 @@ class DropboxNotifierApp(appier.WebApp):
             self.scheduler.start()
 
     def _version(self) -> str:
-        return "0.2.6"
+        return "0.2.7"
 
     def _description(self) -> str:
         return "Dropbox Notifier"
