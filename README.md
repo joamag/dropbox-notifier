@@ -1,11 +1,11 @@
 # Dropbox Notifier 🐍 + 📄
 
-Simple notifier for Dropbox accounts.
+Get notified when a file or folder is modified in your Dropbox account.
 
 ## Features
 
 * Uses Python 3.6+ with type hinting
-* Uses Appier and Appier Extras
+* Uses [Appier](https://github.com/hivesolutions/appier) and [Appier Extras](https://github.com/hivesolutions/appier-extras)
 * Runs on top of [ASGI](https://asgi.readthedocs.io/en/latest/)
 * Sends e-mail based notifications
 * Makes use of Black for validation
