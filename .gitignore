@@ -2,6 +2,8 @@
 
 session.shelve*
 
+/.venv
+
 /dist
 /build
 /src/dropbox_notifier.egg-info
