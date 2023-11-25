@@ -10,7 +10,7 @@ The development of this project was sponsored by [Hive Solutions](http://www.hiv
 * Uses [Appier](https://github.com/hivesolutions/appier) and [Appier Extras](https://github.com/hivesolutions/appier-extras)
 * Runs on top of [ASGI](https://asgi.readthedocs.io/en/latest/)
 * Sends e-mail based notifications
-* Makes use of Black for validation
+* Makes use of [Black](https://github.com/psf/black) for validation
 
 ### Configuration
 
