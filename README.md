@@ -1,6 +1,8 @@
 # Dropbox Notifier 🐍 + 📄
 
-Get notified when a file or folder is modified in your Dropbox account.
+Get notified when a file or folder is modified in your [Dropbox](https://www.dropbox.com) account.
+
+The development of this project was sponsored by [Hive Solutions](http://www.hive.pt).
 
 ## Features
 
