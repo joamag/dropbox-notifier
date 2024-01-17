@@ -22,6 +22,7 @@ The development of this project was sponsored by [Hive Solutions](http://www.hiv
 | **NOTIFIER_RECEIVERS** | `list` | `[]`    | Alternative to `NOTIFIER_EMAIL` to specify multiple receivers.                                   |
 | **NOTIFIER_CC**        | `list` | `[]`    | Sames as `NOTIFIER_RECEIVERS` but for the CC field.                                              |
 | **NOTIFIER_BCC**       | `list` | `[]`    | Sames as `NOTIFIER_RECEIVERS` but for the BCC field.                                             |
+| **NOTIFIER_REPLY_TO**  | `list` | `[]`    | Sames as `NOTIFIER_RECEIVERS` but for the Reply-to.                                              |
 | **NOTIFIER_FOLDER**    | `str`  | `None`  | The Dropbox path or ID of the folder to be scanned for changes (eg: `"id:CtYjakofsdAAAAAPyEg"`). |
 
 ## License

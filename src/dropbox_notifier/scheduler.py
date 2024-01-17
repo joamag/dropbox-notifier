@@ -38,15 +38,32 @@ class Scheduler(appier.Scheduler):
         )
         cc: list = typing.cast(list, appier.conf("NOTIFIER_CC", [], cast=list))
         bcc: list = typing.cast(list, appier.conf("NOTIFIER_BCC", [], cast=list))
+        reply_to: list = typing.cast(
+            list, appier.conf("NOTIFIER_REPLY_TO", [], cast=list)
+        )
         folder_path: str = typing.cast(str, appier.conf("NOTIFIER_FOLDER", None))
 
         self.logger.debug("Start of tick operation ...")
         if (email or receivers) and folder_path:
-            self.scan_folder(email, folder_path, receivers=receivers, cc=cc, bcc=bcc)
+            self.scan_folder(
+                email,
+                folder_path,
+                receivers=receivers,
+                cc=cc,
+                bcc=bcc,
+                reply_to=reply_to,
+            )
         self.logger.debug("Ended tick operation")
 
     def scan_folder(
-        self, email: str, folder_path: str, receivers=[], cc=[], bcc=[], owner=None
+        self,
+        email: str,
+        folder_path: str,
+        receivers=[],
+        cc=[],
+        bcc=[],
+        reply_to=[],
+        owner=None,
     ):
         self.logger.debug(f"Scanning '{folder_path}' for changes...")
 
@@ -117,6 +134,7 @@ class Scheduler(appier.Scheduler):
                 receivers=receivers if receivers else [email],
                 cc=cc,
                 bcc=bcc,
+                reply_to=reply_to,
                 subject=owner.to_locale(f"Dropbox folder {folder_path} updated"),
                 attachments=added_files,
                 added_entries=added_entries,
