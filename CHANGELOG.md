@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Support for the `NOTIFIER_REPLY_TO` configuration variable
+*
 
 ### Changed
 
@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.2.8] - 2024-01-17
+
+### Added
+
+* Support for the `NOTIFIER_REPLY_TO` configuration variable
 
 ## [0.2.7] - 2023-06-14
 
