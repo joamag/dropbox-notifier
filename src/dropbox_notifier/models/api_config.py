@@ -13,6 +13,10 @@ class APIConfig(DropboxNotifierBase):
 
     refresh_token = appier.field(index=True)
 
+    @classmethod
+    def list_names(cls):
+        return ["id", "access_token", "refresh_token"]
+
     def refresh_access_s(self, access_token):
         self.access_token = access_token
         self.save()
