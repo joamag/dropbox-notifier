@@ -14,14 +14,14 @@ class APIConfig(DropboxNotifierBase):
     refresh_token = appier.field(index=True)
 
     @classmethod
-    def list_names(cls):
+    def list_names(cls) -> list[str]:
         return ["id", "access_token", "refresh_token"]
 
     def refresh_access_s(self, access_token):
         self.access_token = access_token
         self.save()
 
-    def get_api(self):
+    def get_api(self) -> dropbox.API:
         client_id = appier.conf("DROPBOX_ID")
         client_secret = appier.conf("DROPBOX_SECRET")
         appier.verify(client_id, message="No Dropbox Client ID set")

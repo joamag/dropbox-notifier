@@ -6,5 +6,5 @@ import appier_extras
 
 class DropboxNotifierBase(appier_extras.admin.Base):
     @classmethod
-    def is_abstract(cls):
+    def is_abstract(cls) -> bool:
         return True
