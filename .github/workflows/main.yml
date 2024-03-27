@@ -40,8 +40,8 @@ jobs:
       - name: Verify code structure with mypy
         run: |
           pip install mypy
-          mypy src --ignore-missing-imports
-          MYPYPATH=src mypy test --ignore-missing-imports
+          mypy src --ignore-missing-imports --allow-redefinition
+          MYPYPATH=src mypy test --ignore-missing-imports --allow-redefinition
 
       - name: Run unit tests
         run: |

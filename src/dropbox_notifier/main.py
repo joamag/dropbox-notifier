@@ -38,4 +38,4 @@ if __name__ == "__main__":
     app = DropboxNotifierApp()
     app.serve()
 else:
-    __path__ = []
+    __path__: list[str] = []

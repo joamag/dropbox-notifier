@@ -14,7 +14,7 @@ class RootController(appier.Controller):
     def ensure_api(self) -> typing.Union[str, None]:
         api_config = self.get_api_config()
         if api_config.access_token:
-            return
+            return None
         api = self.get_api()
         return api.oauth_authorize()
 
