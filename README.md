@@ -31,5 +31,6 @@ Dropbox Notifier is currently licensed under the [Apache License, Version 2.0](h
 
 ## Build Automation
 
+[![Build Status](https://github.com/joamag/dropbox-notifier/workflows/Main%20Workflow/badge.svg)](https://github.com/joamag/dropbox-notifier/actions)
 [![PyPi Status](https://img.shields.io/pypi/v/dropbox-notifier.svg)](https://pypi.python.org/pypi/dropbox-notifier)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/)
