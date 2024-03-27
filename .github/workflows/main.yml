@@ -9,42 +9,41 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        python-version: [
-          "3.10",
-          "3.11",
-          "3.12",
-          latest,
-          rc
-        ]
+        python-version: ["3.10", "3.11", "3.12", "latest"]
     runs-on: ubuntu-latest
     container: python:${{ matrix.python-version }}
     steps:
-      - uses: actions/checkout@v4
-      - run: python --version
-      - run: |
+      - name: Checkout code from repository
+        uses: actions/checkout@v4
+
+      - name: Print Python information
+        run: python --version
+
+      - name: Install Python dependencies
+        run: |
           pip install -r requirements.txt
           pip install -r extra.txt
-      - run: |
+
+      - name: Verify code format with black
+        run: |
           pip install black
           black . --check
+
+      - name: Verify code linting with pylint
+        run: |
+          pip install pylint
+          cd src
+          PYTHONPATH=. pylint --rcfile ../.pylintrc *
+          cd ..
         if: matrix.python-version == '3.12'
-      - run: python setup.py test
-  build-pypy:
-    name: Build PyPy
-    timeout-minutes: 10
-    strategy:
-      matrix:
-        python-version: ["3.10"]
-    runs-on: ubuntu-latest
-    container: pypy:${{ matrix.python-version }}
-    steps:
-      - uses: actions/checkout@v4
-      - run: pypy --version
-      - run: |
-          pip install -r requirements.txt
-          pip install -r extra.txt
-      - run: |
-          pip install black
-          black . --check
-        if: matrix.python-version == '3.12'
-      - run: pypy setup.py test
+
+      - name: Verify code structure with mypy
+        run: |
+          pip install mypy
+          mypy src --ignore-missing-imports
+          MYPYPATH=src mypy test --ignore-missing-imports
+
+      - name: Run unit tests
+        run: |
+          pip install pytest
+          PYTHONPATH=src pytest
