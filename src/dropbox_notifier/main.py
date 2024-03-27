@@ -20,8 +20,8 @@ class DropboxNotifierApp(appier.WebApp):
 
     def start(self):
         appier.WebApp.start(self)
-        scheduler = appier.conf("SCHEDULER", True, cast=bool)
-        if scheduler:
+        scheduler_ = appier.conf("SCHEDULER", True, cast=bool)
+        if scheduler_:
             self.scheduler.start()
 
     def _version(self) -> str:
