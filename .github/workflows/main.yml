@@ -1,0 +1,50 @@
+name: Main Workflow
+on:
+  push:
+  schedule:
+    - cron: "0 0 * * 0"
+jobs:
+  build:
+    name: Build
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python-version: [
+          "3.10",
+          "3.11",
+          "3.12",
+          latest,
+          rc
+        ]
+    runs-on: ubuntu-latest
+    container: python:${{ matrix.python-version }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python --version
+      - run: |
+          pip install -r requirements.txt
+          pip install -r extra.txt
+      - run: |
+          pip install black
+          black . --check
+        if: matrix.python-version == '3.12'
+      - run: ADAPTER=tiny HTTPBIN=httpbin.bemisc.com python setup.py test
+  build-pypy:
+    name: Build PyPy
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    runs-on: ubuntu-latest
+    container: pypy:${{ matrix.python-version }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: pypy --version
+      - run: |
+          pip install -r requirements.txt
+          pip install -r extra.txt
+      - run: |
+          pip install black
+          black . --check
+        if: matrix.python-version == '3.12'
+      - run: ADAPTER=tiny HTTPBIN=httpbin.bemisc.com pypy setup.py test
