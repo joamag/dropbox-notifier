@@ -1,11 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import typing
-
 import appier
 import appier_extras
 
+from typing import Union, cast
 from dropbox import API
 
 LOOP_TIMEOUT = 30.0
@@ -20,28 +19,24 @@ class Scheduler(appier.Scheduler):
         appier.Scheduler.__init__(
             self,
             owner,
-            timeout=typing.cast(
+            timeout=cast(
                 float, appier.conf("SCHEDULER_TIMEOUT", LOOP_TIMEOUT, cast=int)
             ),
             *args,
             **kwargs,
         )
-        self.previous_entries: typing.Union[dict[str, object], None] = None
-        self.previous_ids: typing.Union[list[str], None] = None
+        self.previous_entries: Union[dict[str, object], None] = None
+        self.previous_ids: Union[list[str], None] = None
 
     def tick(self):
         appier.Scheduler.tick(self)
 
-        email: str = typing.cast(str, appier.conf("NOTIFIER_EMAIL", None))
-        receivers: list = typing.cast(
-            list, appier.conf("NOTIFIER_RECEIVERS", [], cast=list)
-        )
-        cc: list = typing.cast(list, appier.conf("NOTIFIER_CC", [], cast=list))
-        bcc: list = typing.cast(list, appier.conf("NOTIFIER_BCC", [], cast=list))
-        reply_to: list = typing.cast(
-            list, appier.conf("NOTIFIER_REPLY_TO", [], cast=list)
-        )
-        folder_path: str = typing.cast(str, appier.conf("NOTIFIER_FOLDER", None))
+        email: str = cast(str, appier.conf("NOTIFIER_EMAIL", None))
+        receivers: list = cast(list, appier.conf("NOTIFIER_RECEIVERS", [], cast=list))
+        cc: list = cast(list, appier.conf("NOTIFIER_CC", [], cast=list))
+        bcc: list = cast(list, appier.conf("NOTIFIER_BCC", [], cast=list))
+        reply_to: list = cast(list, appier.conf("NOTIFIER_REPLY_TO", [], cast=list))
+        folder_path: str = cast(str, appier.conf("NOTIFIER_FOLDER", None))
 
         self.logger.debug("Start of tick operation ...")
         if (email or receivers) and folder_path:
@@ -68,7 +63,7 @@ class Scheduler(appier.Scheduler):
         self.logger.debug(f"Scanning '{folder_path}' for changes...")
 
         owner = owner or appier.get_app()
-        owner = typing.cast(appier.App, owner)
+        owner = cast(appier.App, owner)
         api = self.get_api()
 
         folder_meta = api.metadata_file(folder_path)
@@ -151,5 +146,5 @@ class Scheduler(appier.Scheduler):
     def get_api(self) -> API:
         from dropbox_notifier import APIConfig
 
-        api_config = typing.cast(APIConfig, APIConfig.singleton())
+        api_config = cast(APIConfig, APIConfig.singleton())
         return api_config.get_api()

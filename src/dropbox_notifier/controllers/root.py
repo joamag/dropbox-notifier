@@ -1,17 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import typing
-
 import appier
 
+from typing import Union, cast
 from dropbox import API
 
 from dropbox_notifier.models import APIConfig
 
 
 class RootController(appier.Controller):
-    def ensure_api(self) -> typing.Union[str, None]:
+    def ensure_api(self) -> Union[str, None]:
         api_config = self.get_api_config()
         if api_config.access_token:
             return None
@@ -24,5 +23,5 @@ class RootController(appier.Controller):
 
     def get_api_config(self) -> APIConfig:
         api_config = APIConfig.singleton()
-        api_config = typing.cast(APIConfig, api_config)
+        api_config = cast(APIConfig, api_config)
         return api_config
