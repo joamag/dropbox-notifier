@@ -5,6 +5,8 @@ import appier
 
 import dropbox
 
+from typing import cast
+
 from .base import DropboxNotifierBase
 
 
@@ -22,11 +24,13 @@ class APIConfig(DropboxNotifierBase):
         self.save()
 
     def get_api(self) -> dropbox.API:
+        app = appier.get_app()
+        app = cast(appier.App, app)
         client_id = appier.conf("DROPBOX_ID")
         client_secret = appier.conf("DROPBOX_SECRET")
         appier.verify(client_id, message="No Dropbox Client ID set")
         appier.verify(client_secret, message="No Dropbox Client Secret set")
-        redirect_url = appier.get_app().url_for("oauth.oauth", absolute=True)
+        redirect_url = app.url_for("oauth.oauth", absolute=True)
         api = dropbox.API(
             client_id=client_id,
             client_secret=client_secret,
