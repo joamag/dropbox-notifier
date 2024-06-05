@@ -6,7 +6,7 @@ import setuptools
 
 setuptools.setup(
     name="dropbox-notifier",
-    version="0.2.8",
+    version="0.2.9",
     author="João Magalhães",
     author_email="joamag@gmail.com",
     description="Dropbox Notifier",
