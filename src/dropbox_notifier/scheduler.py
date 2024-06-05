@@ -25,7 +25,7 @@ class Scheduler(appier.Scheduler):
             *args,
             **kwargs,
         )
-        self.previous_entries: Union[dict[str, object], None] = None
+        self.previous_entries: Union[dict[str, dict], None] = None
         self.previous_ids: Union[list[str], None] = None
 
     def tick(self):
@@ -106,6 +106,16 @@ class Scheduler(appier.Scheduler):
             removed = [id for id in self.previous_ids if not id in ids]
             added_entries = [entries_m[id] for id in added]
             removed_entries = [self.previous_entries[id] for id in removed]
+
+            # filters out the entries that do not have a valid display path
+            # this prevents "ghost" entries from being sent in the email,
+            # actin as a safety measure for the email sending operation
+            added_entries = [
+                entry for entry in added_entries if entry.get("path_display", None)
+            ]
+            removed_entries = [
+                entry for entry in removed_entries if entry.get("path_display", None)
+            ]
 
             added_files = []
 
