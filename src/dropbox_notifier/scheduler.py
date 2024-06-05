@@ -4,7 +4,7 @@
 import appier
 import appier_extras
 
-from typing import Union, cast
+from typing import Any, Dict, Union, cast
 from dropbox import API
 
 LOOP_TIMEOUT = 30.0
@@ -25,7 +25,7 @@ class Scheduler(appier.Scheduler):
             *args,
             **kwargs,
         )
-        self.previous_entries: Union[dict[str, dict], None] = None
+        self.previous_entries: Union[dict[str, Dict[str, Any]], None] = None
         self.previous_ids: Union[list[str], None] = None
 
     def tick(self):
@@ -97,8 +97,11 @@ class Scheduler(appier.Scheduler):
         shared_query = shared_url.query
 
         contents = api.list_folder_file(folder_path, recursive=True)
-        entries_m = dict((entry["id"], entry) for entry in contents.get("entries", []))
-        ids = [entry["id"] for entry in contents["entries"]]
+        entries_m = cast(
+            dict[str, Dict[str, Any]],
+            dict((entry["id"], entry) for entry in contents.get("entries", [])),
+        )
+        ids = cast(list[str], [entry["id"] for entry in contents["entries"]])
         ids.sort()
 
         if self.previous_ids and self.previous_entries and not ids == self.previous_ids:
