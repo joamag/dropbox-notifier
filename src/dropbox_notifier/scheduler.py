@@ -104,6 +104,9 @@ class Scheduler(appier.Scheduler):
         ids = cast(list[str], [entry["id"] for entry in contents["entries"]])
         ids.sort()
 
+        # in case the previous IDs are defined and the current IDs are
+        # different from the previous ones, it means that there's been
+        # a change in the folder and that an email should be sent
         if self.previous_ids and self.previous_entries and not ids == self.previous_ids:
             added = [id for id in ids if not id in self.previous_ids]
             removed = [id for id in self.previous_ids if not id in ids]
