@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.2.10] - 2024-09-09
+
+### Fixed
+
+* Issues with the Dropbox API client
+
 ## [0.2.9] - 2024-06-05
 
 ### Fixed
