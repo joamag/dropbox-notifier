@@ -25,6 +25,18 @@ The development of this project was sponsored by [Hive Solutions](http://www.hiv
 | **NOTIFIER_REPLY_TO**  | `list` | `[]`    | Sames as `NOTIFIER_RECEIVERS` but for the Reply-to.                                              |
 | **NOTIFIER_FOLDER**    | `str`  | `None`  | The Dropbox path or ID of the folder to be scanned for changes (eg: `"id:CtYjakofsdAAAAAPyEg"`). |
 
+### Resend Notifications
+
+If notification emails were missed (e.g., due to a race condition), you can resend them for files modified after a given timestamp using the admin endpoint:
+
+```bash
+GET /admin/resend?since=2026-03-01T00:00:00Z
+```
+
+The `since` parameter should be an ISO 8601 UTC timestamp matching the Dropbox `server_modified` format (eg: `2026-03-01T00:00:00Z`).
+
+The endpoint will scan the monitored folder, download all files modified after the given timestamp, and resend the notification email with those files as attachments.
+
 ## License
 
 Dropbox Notifier is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).
