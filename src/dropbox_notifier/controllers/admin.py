@@ -52,6 +52,30 @@ class AdminController(RootController):
         if not email and not receivers:
             raise appier.OperationalError(message="No email or receivers defined")
 
+        added_entries, added_files, folder_path, shared_base, shared_query, prefix_size = (
+            self._resend(folder_path, since=since)
+        )
+
+        appier_extras.admin.Base.send_email_g(
+            owner,
+            "email/updated.html.tpl",
+            receivers=receivers if receivers else [email],
+            cc=cc,
+            bcc=bcc,
+            reply_to=reply_to,
+            subject=owner.to_locale(f"Dropbox folder {folder_path} updated"),
+            attachments=added_files,
+            added_entries=added_entries,
+            removed_entries=[],
+            folder_path=folder_path,
+            folder_url=shared_base,
+            folder_query=shared_query,
+            prefix_size=prefix_size,
+        )
+
+        return dict(since=since, resent=len(added_files))
+
+    def _resend(self, folder_path, since=None):
         api = self.get_api()
 
         folder_meta = api.metadata_file(folder_path)
@@ -109,21 +133,4 @@ class AdminController(RootController):
             )
             added_files.append(file_tuple)
 
-        appier_extras.admin.Base.send_email_g(
-            owner,
-            "email/updated.html.tpl",
-            receivers=receivers if receivers else [email],
-            cc=cc,
-            bcc=bcc,
-            reply_to=reply_to,
-            subject=owner.to_locale(f"Dropbox folder {folder_path} updated"),
-            attachments=added_files,
-            added_entries=added_entries,
-            removed_entries=[],
-            folder_path=folder_path,
-            folder_url=shared_base,
-            folder_query=shared_query,
-            prefix_size=prefix_size,
-        )
-
-        return dict(since=since, resent=len(added_files))
+        return added_entries, added_files, folder_path, shared_base, shared_query, prefix_size
