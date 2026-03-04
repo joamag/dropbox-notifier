@@ -97,7 +97,7 @@ class AdminController(RootController):
 
             # loops trying to find the best possible share link
             # for the folder, keeping in mind that using extended sharing
-            # controls will allows deep shared folder
+            # controls will allow deep shared folder
             for share_link in share_links:
                 link_permissions = share_link.get("link_permissions", {})
                 if not link_permissions.get("can_use_extended_sharing_controls", False):
