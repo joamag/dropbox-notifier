@@ -52,9 +52,14 @@ class AdminController(RootController):
         if not email and not receivers:
             raise appier.OperationalError(message="No email or receivers defined")
 
-        added_entries, added_files, folder_path, shared_base, shared_query, prefix_size = (
-            self._resend(folder_path, since=since)
-        )
+        (
+            added_entries,
+            added_files,
+            folder_path,
+            shared_base,
+            shared_query,
+            prefix_size,
+        ) = self._resend(folder_path, since=since)
 
         appier_extras.admin.Base.send_email_g(
             owner,
@@ -133,4 +138,11 @@ class AdminController(RootController):
             )
             added_files.append(file_tuple)
 
-        return added_entries, added_files, folder_path, shared_base, shared_query, prefix_size
+        return (
+            added_entries,
+            added_files,
+            folder_path,
+            shared_base,
+            shared_query,
+            prefix_size,
+        )
