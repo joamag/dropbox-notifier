@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Support for resending notification emails via `GET /admin/resend?since=<ISO8601>`
+*
 
 ### Changed
 
@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.3.0] - 2026-03-04
+
+### Added
+
+* Support for resending notification emails via `GET /admin/resend?since=<ISO8601>`
 
 ## [0.2.10] - 2024-09-09
 
